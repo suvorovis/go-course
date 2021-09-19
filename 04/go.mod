@@ -1,4 +1,4 @@
-module github.com/suvorovis/go-course/02
+module github.com/suvorovis/go-course/03
 
 go 1.17
 

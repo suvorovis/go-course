@@ -6,15 +6,11 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestTopFrequentWords(t *testing.T) {
-	require.Equal(
-		t,
-		[10]string{"op", "ui", "as", "ty", "qw", "lp", "kl", "jk", "gh", "er"},
-		TopFrequentWords("as df gh jk kl lp qw er ty ui op op op op ui ui as"),
-	)
-	require.Equal(
-		t,
-		[10]string{"op", "ui", "as"},
-		TopFrequentWords("as ui op op op op ui ui as"),
-	)
+func TestPack(t *testing.T) {
+	require.Equal(t, "aaaabccddddde", Unpack("a4bc2d5e"))
+	require.Equal(t, "abcd", Unpack("abcd"))
+	require.Equal(t, "", Unpack("45"))
+	require.Equal(t, "qwe45", Unpack(`qwe\4\5`))
+	require.Equal(t, "qwe44444", Unpack(`qwe\45`))
+	require.Equal(t, "qwe\\\\\\\\\\", Unpack(`qwe\\5`))
 }

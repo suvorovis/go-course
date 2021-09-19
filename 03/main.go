@@ -1,56 +1,36 @@
 package main
 
 import (
-	"sort"
-	"strings"
+	"fmt"
 )
 
 func main() {
-	text := "as ui op op op op ui ui as"
-	for _, word := range TopFrequentWords(text) {
-		print(word + " ")
-	}
+	fmt.Println(Unpack(`qwe\4\5`))
 }
 
-func TopFrequentWords(text string) [10]string {
-	//Count
-	words := strings.Split(text, " ")
-	counts := make(map[string]int, len(words))
-	for _, word := range words {
-		counts[word]++
-	}
-
-	//Prepare
-	type word struct {
-		value string
-		count int
-	}
-	top := make([]word, 0, len(counts))
-	for w, count := range counts {
-		top = append(top, word{
-			value: w,
-			count: count,
-		})
-	}
-
-	//Sort
-	sort.Slice(top, func(i, j int) bool {
-		if top[i].count == top[j].count {
-			return top[i].value > top[j].value
+func Unpack(s string) string {
+	var escape bool
+	var symbol rune
+	var result []rune
+	for _, r := range s {
+		switch {
+		case r >= 'a' && r <= 'z' || escape:
+			if symbol != 0 {
+				result = append(result, symbol)
+			}
+			symbol = r
+			escape = false
+		case r >= '2' && r <= '9' && symbol != 0:
+			for i := 0; i < int(r-'0'); i++ {
+				result = append(result, symbol)
+			}
+			symbol = 0
+		case r == '\\':
+			escape = true
 		}
-		return top[i].count > top[j].count
-	})
-
-	//Format
-	length := len(top)
-	if length > 10 {
-		length = 10
 	}
-
-	result := [10]string{}
-	for i := 0; i < length; i++ {
-		result[i] = top[i].value
+	if symbol != 0 {
+		result = append(result, symbol)
 	}
-
-	return result
+	return string(result)
 }
