@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	text := "as df gh jk kl lp qw er ty ui op op op op ui ui as"
+	text := "as ui op op op op ui ui as"
 	for _, word := range TopFrequentWords(text) {
 		print(word + " ")
 	}
@@ -42,8 +42,13 @@ func TopFrequentWords(text string) [10]string {
 	})
 
 	//Format
+	length := len(top)
+	if length > 10 {
+		length = 10
+	}
+
 	result := [10]string{}
-	for i := 0; i < 10; i++ {
+	for i := 0; i < length; i++ {
 		result[i] = top[i].value
 	}
 
