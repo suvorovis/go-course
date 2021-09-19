@@ -1,4 +1,4 @@
-module go-course/01
+module github.com/suvorovis/go-course/01
 
 go 1.16
 
